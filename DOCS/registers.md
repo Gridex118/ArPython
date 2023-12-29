@@ -15,5 +15,7 @@
 - Rdl (16 bit)
 
 ## Special Registers
-- Stack Pointer: Rsp (16 bit)
+- Stack Pointer: Rsp (8 bit)
 - Program Counter: Rpc (16 bit)
+- Segment Register: Rsg (16 bit)
+- Flag Register: Rfl (8 bit)
