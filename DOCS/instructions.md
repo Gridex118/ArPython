@@ -1,27 +1,35 @@
 # Instruction Set
 ### The machine uses 32 bit instructions, 6 bits of which are reserved for the opcodes
 
-| OPCODE           | Mnemonic    | Binary   | Arguments                               | Scheme |
-|------------------|-------------|----------|-----------------------------------------|--------|
-| push             |  push       |  000000  | type(2 b)  data(24 b)                   | A1     |
-| pop              |  pop        |  000001  | type(2 b)  to(24 b)                     | A2     |
-| duplicate        |  dup        |  000010  |                                         |        |
-| move             |  mov        |  000011  | type(4 b)  to(11 b)  from(11 b)         | B1     |
-| addition         |  add        |  000100  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| substraction     |  sub        |  000101  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| multiplication   |  mul        |  000111  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| logic and        |  and        |  001000  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| logic or         |  or         |  001001  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| logic xor        |  xor        |  001010  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| logic not        |  not        |  001011  | type(2 b)  to(4 b)  a(20 b)             | D      |
-| bit shift left   |  lsh        |  001100  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| bit shift right  |  rsh        |  001101  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-| comparison       |  cmp        |  001110  | type(4 b)  a(11 b)  b(11 b)             | B2     |
-| jump             |  jmp        |  001111  | cmp_type(3 b) dest_type(2 b)  to(21 b)  | E      |
-| function call    |  call       |  010000  | dest_type(2 b)  to(24 b)                | A3     |
-| print            |  print      |  010001  | undecided                               |        |
-| write            |  write      |  010010  | undecided                               |        |
-| halt             |  halt       |  010011  |                                         |        |
+| OPCODE                  | Mnemonic    | Hex   | Arguments                               | Scheme |
+|-------------------------|-------------|-------|-----------------------------------------|--------|
+| push                    |  push       |  00h  | type(2 b)  data(24 b)                   | A1     |
+| pop                     |  pop        |  01h  | type(2 b)  to(24 b)                     | A2     |
+| duplicate               |  dup        |  02h  |                                         |        |
+| move                    |  mov        |  03h  | type(4 b)  to(11 b)  from(11 b)         | B1     |
+| addition                |  add        |  04h  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| substraction            |  sub        |  05h  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| multiplication          |  mul        |  06h  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| division                |  div        |  07h  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| logic and               |  and        |  08h  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| logic or                |  or         |  09h  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| logic xor               |  xor        |  0Ah  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| logic not               |  not        |  0Bh  | type(2 b)  to(4 b)  a(20 b)             | D      |
+| bit shift left          |  lsh        |  0Ch  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| bit shift right         |  rsh        |  0Dh  | type(4 b)  to(4 b)  a(9/32 b)  b(9/32 b)| C      |
+| comparison              |  cmp        |  0Eh  | type(4 b)  a(11 b)  b(11 b)             | B2     |
+| jump                    |  jmp        |  0Fh  | type(2 b)  to(24 b)                     | A3     |
+| jump if equal to        |  jeq        |  10h  | type(2 b)  to(24 b)                     | A3     |
+| jump if not equal to    |  jneq       |  11h  | type(2 b)  to(24 b)                     | A3     |
+| jump if less than       |  jls        |  12h  | type(2 b)  to(24 b)                     | A3     |
+| jump if greater than    |  jgr        |  13h  | type(2 b)  to(24 b)                     | A3     |
+| jump if less or eql     |  jle        |  14h  | type(2 b)  to(24 b)                     | A3     |
+| jump if greater or eql  |  jge        |  15h  | type(2 b)  to(24 b)                     | A3     |
+| function call           |  call       |  16h  | type(2 b)  to(24 b)                     | A3     |
+| return from function    |  ret        |  17h  |                                         |        |
+| print                   |  print      |  18h  | from(2 b)  data_type(2 b)  data(24 b)   | E      |
+| write                   |  write      |  19h  | from(2 b)  data_type(2 b)  data(24 b)   | E      |
+| halt                    |  halt       |  1Ah  |                                         |        |
 
 ## Scheme A1
 Types:
@@ -40,7 +48,8 @@ Types:
 ## Scheme A3
 Destination types:
 1. immediate address
-2. address stored in register
+2. address stored in memory address
+3. address stored in register
 
 ## Scheme B
 Types:
@@ -68,20 +77,25 @@ Types:
 9. memory address stored in register and register
 10. memory address stored in register and memory address stored in register
 ### Result can only be stored in a register
-### If both *a* and *b* are zero, move to the next 32-word. *a* is the higher order 16-word and *b* the lower order 16-word
+### If both *a* and *b* are zero, the next 32-word is *a* and the one after that is *b*
+
+## Scheme D
+Type:
+1. immediate
+2. immediate memory address
+3. memory address in register
+4. register
 
 ## Scheme E
-Comparison types:
-1. unconditionally
-2. if equal
-3. if less than
-4. if greater than
-5. if less than equal to
-6. if greater than equal to  
+From:
+1. from immediate memory address
+2. from memory address in register
+3. from register
 
-Destination types:
-1. to immediate address
-2. to address stored in register
+Data Type:
+1. number
+2. string
+3. escape sequence
 
 
 ## Conversion example
@@ -94,14 +108,14 @@ for number in numbers:
 
 ### Machine Mnemonics
 ```
-        mov [numbers], 1
-        mov [numbers + 1], 2
-        mov [numbers + 2], 3
-        mov [numbers + 3], 4
+        mov [64h], 1                ; the first element in numbers is stored at memory address 64h
+        mov [64h + 1], 2
+        mov [64h + 2], 3
+        mov [64h + 3], 4
         mov Rbl, 0
-for:    print int, [numbers + Rbl]
+for:    print int, [64h + Rbl]
         add Rbl, Rbl, 1
         cmp Rbl, 3
-        jmp ls for
+        jls for
         halt
 ```
