@@ -1,23 +1,27 @@
 # Instruction Set
 ### The machine uses 32 bit instructions, 6 bits of which are reserved for the opcodes
 
-| OPCODE Name | OPCODE   | Arguments                               | Scheme |
-|-------------|----------|-----------------------------------------|--------|
-|  push       |  000000  | type(2 b)  data(24 b)                   | A1     |
-|  pop        |  000001  | type(2 b)  to(24 b)                     | A2     |
-|  mov        |  000010  | type(4 b)  to(11 b)  from(11 b)         | B1     |
-|  add        |  000011  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  sub        |  000100  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  mul        |  000101  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  and        |  000111  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  or         |  001000  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  xor        |  001001  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  not        |  001010  | type(2 b)  to(4 b)  a(20 b)             | D      |
-|  lsh        |  001011  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  rsh        |  001100  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
-|  cmp        |  001101  | type(4 b)  a(11 b)  b(11 b)             | B2     |
-|  jmp        |  001111  | cmp_type(3 b) dest_type(2 b)  to(21 b)  | E      |
-|  call       |  010000  | dest_type(2 b)  to(24 b)                | A3     |
+| OPCODE           | Mnemonic    | Binary   | Arguments                               | Scheme |
+|------------------|-------------|----------|-----------------------------------------|--------|
+| push             |  push       |  000000  | type(2 b)  data(24 b)                   | A1     |
+| pop              |  pop        |  000001  | type(2 b)  to(24 b)                     | A2     |
+| duplicate        |  dup        |  000010  |                                         |        |
+| move             |  mov        |  000011  | type(4 b)  to(11 b)  from(11 b)         | B1     |
+| addition         |  add        |  000100  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| substraction     |  sub        |  000101  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| multiplication   |  mul        |  000111  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| logic and        |  and        |  001000  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| logic or         |  or         |  001001  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| logic xor        |  xor        |  001010  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| logic not        |  not        |  001011  | type(2 b)  to(4 b)  a(20 b)             | D      |
+| bit shift left   |  lsh        |  001100  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| bit shift right  |  rsh        |  001101  | type(4 b)  to(4 b)  a(9/16 b)  b(9/16 b)| C      |
+| comparison       |  cmp        |  001110  | type(4 b)  a(11 b)  b(11 b)             | B2     |
+| jump             |  jmp        |  001111  | cmp_type(3 b) dest_type(2 b)  to(21 b)  | E      |
+| function call    |  call       |  010000  | dest_type(2 b)  to(24 b)                | A3     |
+| print            |  print      |  010001  | undecided                               |        |
+| write            |  write      |  010010  | undecided                               |        |
+| halt             |  halt       |  010011  |                                         |        |
 
 ## Scheme A1
 Types:
@@ -78,3 +82,26 @@ Comparison types:
 Destination types:
 1. to immediate address
 2. to address stored in register
+
+
+## Conversion example
+### Python
+```
+numbers = (1, 2, 3, 4)
+for number in numbers:
+    print(number)
+```
+
+### Machine Mnemonics
+```
+        mov [numbers], 1
+        mov [numbers + 1], 2
+        mov [numbers + 2], 3
+        mov [numbers + 3], 4
+        mov Rbl, 0
+for:    print int, [numbers + Rbl]
+        add Rbl, Rbl, 1
+        cmp Rbl, 3
+        jmp ls for
+        halt
+```
